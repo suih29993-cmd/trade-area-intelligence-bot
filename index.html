@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>District Health Studio · 商圈健康度演示</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">DH</span>
+        <div>
+          <h1>District Health Studio</h1>
+          <p>合成商圈诊断 · 离线演示</p>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="主导航">
+        <button class="tab active" type="button" data-tab="dash">诊断面板</button>
+        <button class="tab" type="button" data-tab="compare">多商圈对比</button>
+        <button class="tab" type="button" data-tab="settings">数据与安全</button>
+      </nav>
+      <div class="server-status" id="serverStatus" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>检查服务中…</span>
+      </div>
+    </header>
+
+    <div class="demo-banner" id="modeBanner">
+      演示模式：门店、商圈、订单、配送费与活动均为合成数据；默认不调用地图、搜索或 AI 外部服务。
+    </div>
+
+    <main class="main-area">
+      <section id="view-dash" class="view active" aria-label="诊断面板">
+        <div class="search-row">
+          <label class="sr-only" for="searchInput">搜索虚构商圈</label>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="输入虚构商圈名，例如 Harbor Central">
+          <button id="btnSearch" class="btn primary" type="button">查询诊断</button>
+          <div class="chips" id="districtChips" aria-label="虚构商圈快捷入口"></div>
+        </div>
+
+        <div class="dash">
+          <aside class="chat-col" aria-label="本地诊断助手">
+            <div class="chat-head">
+              <div>
+                <h2>本地诊断助手</h2>
+                <p>基于合成数据的可解释规则引擎</p>
+              </div>
+              <span class="pill">离线</span>
+            </div>
+            <div id="chatMsgs" class="chat-msgs" aria-live="polite"></div>
+            <form id="chatForm" class="chat-input-bar">
+              <label class="sr-only" for="chatInput">向诊断助手提问</label>
+              <input id="chatInput" type="text" autocomplete="off" placeholder="例如：这个商圈竞争激烈吗？">
+              <button class="btn primary" type="submit">发送</button>
+            </form>
+            <div class="chat-foot">对话在浏览器本地完成，不发送到外部服务。</div>
+          </aside>
+
+          <section class="panel-col" id="dashboard" aria-label="可视化诊断面板">
+            <div class="empty-state">
+              <span class="empty-icon" aria-hidden="true">◇</span>
+              <h2>选择一个虚构商圈开始</h2>
+              <p>右侧会展示合成地图、门店覆盖、竞品结构、活动力度与健康度拆解。</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-compare" class="view" aria-label="多商圈对比">
+        <div class="cmp-bar">
+          <div class="cmp-select">
+            <span class="cmp-label">选择 2–5 个虚构商圈：</span>
+            <div class="cmp-chips" id="cmpChips"></div>
+          </div>
+          <div class="cmp-selected" id="cmpSelected"></div>
+          <div class="btn-row">
+            <button id="btnCompare" class="btn primary" type="button">生成对比</button>
+            <button id="btnCompareClear" class="btn" type="button">清空选择</button>
+          </div>
+        </div>
+        <div id="comparePanel" class="cmp-panel">
+          <div class="empty-state">
+            <span class="empty-icon" aria-hidden="true">▦</span>
+            <h2>选择 2–5 个商圈</h2>
+            <p>对比健康度、覆盖、竞对压力、活动力度、销售体量与配送体验。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view" aria-label="数据与安全">
+        <div class="settings-grid">
+          <section class="card">
+            <h2>数据来源</h2>
+            <p>页面只读取本项目的合成数据集。数据集由固定种子生成，可重复构建，不包含真实门店、真实地址或真实经营记录。</p>
+            <dl class="kv">
+              <dt>数据文件</dt><dd><code>data/demo_districts.json</code></dd>
+              <dt>生成脚本</dt><dd><code>tools/generate_demo_data.py</code></dd>
+              <dt>坐标体系</dt><dd>虚构局部平面 <code>x / y</code>（km），不使用真实经纬度</dd>
+              <dt>商圈数量</dt><dd id="datasetCount">—</dd>
+            </dl>
+          </section>
+
+          <section class="card">
+            <h2>导入 / 导出</h2>
+            <p>仅处理本地 JSON。导入数据保存在浏览器 <code>localStorage</code>，不会上传；刷新页面后仍可恢复。</p>
+            <label class="field-label" for="importBox">粘贴单个商圈 JSON</label>
+            <textarea id="importBox" rows="7" placeholder="粘贴 examples/import_example.json 的内容"></textarea>
+            <label class="file-label" for="importFile">或选择 JSON 文件</label>
+            <input id="importFile" type="file" accept=".json,application/json">
+            <div class="btn-row">
+              <button id="btnImport" class="btn primary" type="button">校验并导入</button>
+              <button id="btnExport" class="btn" type="button">导出当前商圈</button>
+              <button id="btnReset" class="btn danger" type="button">清除本地导入</button>
+            </div>
+            <div id="importFeedback" class="feedback" role="status"></div>
+          </section>
+
+          <section class="card">
+            <h2>实时 AI（默认关闭）</h2>
+            <p>公开副本不在浏览器保存任何 API Key。只有服务端通过环境变量显式启用后，才会调用使用者自行配置的兼容接口；默认始终使用本地规则引擎。</p>
+            <div id="liveStatus" class="status-box">正在检查服务端配置…</div>
+            <button id="btnLiveCheck" class="btn" type="button">重新检查</button>
+          </section>
+
+          <section class="card">
+            <h2>安全边界</h2>
+            <ul class="plain-list">
+              <li>无第三方地图底图、搜索接口或遥测请求。</li>
+              <li>服务只监听 <code>127.0.0.1</code>，不对外网开放。</li>
+              <li>日志不记录请求体、查询字符串或凭证。</li>
+              <li>导入内容做字段、长度、数值范围与 HTML 字符校验。</li>
+              <li>页面使用严格 CSP，不加载外部脚本或样式。</li>
+            </ul>
+          </section>
+
+          <section class="card span-2">
+            <h2>导入格式</h2>
+            <p>支持单个商圈对象，或 <code>{ "district": { ... } }</code> 包装。最多 50 家门店，坐标范围 ±3 km。</p>
+            <pre class="code-block">{
+  "district": {
+    "id": "demo-district",
+    "name": "Demo District",
+    "shortName": "Demo",
+    "description": "A fictional district for local testing.",
+    "center": { "x": 0, "y": 0 },
+    "coverageRadiusKm": 3,
+    "stores": [
+      {
+        "role": "focus",
+        "brand": "Northstar Tea",
+        "name": "Northstar Tea · Demo One",
+        "x": 0.4,
+        "y": -0.2,
+        "address": "Unit 12, Demo Walk (fictional)",
+        "monthlyOrders": 640,
+        "channels": {
+          "Marketplace A": {
+            "deliveryFee": 2.5,
+            "promotionPct": 16,
+            "promotionLabel": "Spend 25 save 4",
+            "couponValue": 3
+          },
+          "Marketplace B": {
+            "deliveryFee": 2.0,
+            "promotionPct": 12,
+            "promotionLabel": "Spend 25 save 3",
+            "couponValue": 2
+          }
+        }
+      }
+    ]
+  }
+}</pre>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>District Health Studio · Portfolio demo</span>
+      <span>所有指标均为合成演示，不代表真实业务表现。</span>
+    </footer>
+  </div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/advisor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

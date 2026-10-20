@@ -1,0 +1,30 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+
+# Runtime state and logs
+runtime/
+*.log
+*.pid
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Node / editor / OS
+node_modules/
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local exports and private material
+private/
+exports/
+*.zip

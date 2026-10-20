@@ -1,0 +1,93 @@
+{
+  "dataClass": "synthetic",
+  "note": "Synthetic import example. Every value is fictional.",
+  "channels": ["Marketplace A", "Marketplace B"],
+  "district": {
+    "id": "demo-garden-walk",
+    "name": "Garden Walk",
+    "shortName": "Garden",
+    "description": "A fictional neighbourhood district used to test the JSON import flow.",
+    "center": { "x": 0, "y": 0 },
+    "coverageRadiusKm": 3,
+    "stores": [
+      {
+        "id": "demo-garden-focus-01",
+        "role": "focus",
+        "brand": "Northstar Tea",
+        "name": "Northstar Tea · Garden One",
+        "x": 0.42,
+        "y": -0.18,
+        "distanceKm": 0.46,
+        "address": "Unit 12, Garden Walk (fictional)",
+        "monthlyOrders": 640,
+        "source": "synthetic",
+        "channels": {
+          "Marketplace A": {
+            "deliveryFee": 2.5,
+            "promotionPct": 16,
+            "promotionLabel": "Spend 25 save 4",
+            "couponValue": 3
+          },
+          "Marketplace B": {
+            "deliveryFee": 2.0,
+            "promotionPct": 12,
+            "promotionLabel": "Spend 25 save 3",
+            "couponValue": 2
+          }
+        }
+      },
+      {
+        "id": "demo-garden-comp-01",
+        "role": "competitor",
+        "brand": "Mori Tea",
+        "name": "Mori Tea · Garden One",
+        "x": -1.35,
+        "y": 0.82,
+        "distanceKm": 1.58,
+        "address": "Unit 8, Garden Walk (fictional)",
+        "monthlyOrders": 520,
+        "source": "synthetic",
+        "channels": {
+          "Marketplace A": {
+            "deliveryFee": 3.0,
+            "promotionPct": 10,
+            "promotionLabel": "Spend 30 save 3",
+            "couponValue": 2
+          },
+          "Marketplace B": {
+            "deliveryFee": 2.5,
+            "promotionPct": 8,
+            "promotionLabel": "Spend 30 save 2",
+            "couponValue": 0
+          }
+        }
+      },
+      {
+        "id": "demo-garden-comp-02",
+        "role": "competitor",
+        "brand": "Pine Cup",
+        "name": "Pine Cup · Garden Two",
+        "x": 2.05,
+        "y": -1.12,
+        "distanceKm": 2.34,
+        "address": "Unit 21, Garden Walk (fictional)",
+        "monthlyOrders": 410,
+        "source": "synthetic",
+        "channels": {
+          "Marketplace A": {
+            "deliveryFee": 2.0,
+            "promotionPct": 14,
+            "promotionLabel": "Spend 25 save 4",
+            "couponValue": 3
+          },
+          "Marketplace B": {
+            "deliveryFee": 1.5,
+            "promotionPct": 12,
+            "promotionLabel": "Spend 25 save 3",
+            "couponValue": 2
+          }
+        }
+      }
+    ]
+  }
+}

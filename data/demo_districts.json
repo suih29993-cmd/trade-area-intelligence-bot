@@ -1,0 +1,1168 @@
+{
+  "schemaVersion": 1,
+  "dataClass": "synthetic",
+  "generatedBy": "tools/generate_demo_data.py",
+  "focusBrand": "Northstar Tea",
+  "competitorBrands": [
+    "Cedar & Co.",
+    "Mori Tea",
+    "Pine Cup",
+    "Cloudleaf",
+    "Daily Draft"
+  ],
+  "channels": [
+    "Marketplace A",
+    "Marketplace B"
+  ],
+  "disclaimer": "Synthetic demonstration data. District names, brands, stores, addresses, orders, fees and promotions are fictional and must not be interpreted as real business results.",
+  "districts": [
+    {
+      "id": "harbor-central",
+      "name": "Harbor Central",
+      "shortName": "Harbor",
+      "description": "Fictional waterfront office and retail cluster with a lunch peak and evening footfall.",
+      "center": {
+        "x": 0,
+        "y": 0
+      },
+      "coverageRadiusKm": 3,
+      "profileNote": "High traffic · high competition · high promotion intensity",
+      "stores": [
+        {
+          "id": "harbor-central-ns-02",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Harbor Core 2",
+          "x": -0.33,
+          "y": 0.49,
+          "distanceKm": 0.59,
+          "address": "Unit 19, Harbor Walk (fictional)",
+          "monthlyOrders": 770,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 9,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.0,
+              "promotionPct": 12,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-ns-01",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Harbor Core 1",
+          "x": 0.68,
+          "y": 0.1,
+          "distanceKm": 0.68,
+          "address": "Unit 12, Harbor Walk (fictional)",
+          "monthlyOrders": 720,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 21,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 23,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-ns-04",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Harbor Edge 4",
+          "x": 0.26,
+          "y": -1.49,
+          "distanceKm": 1.52,
+          "address": "Unit 33, Harbor Walk (fictional)",
+          "monthlyOrders": 650,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 21,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.0,
+              "promotionPct": 22,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-ns-03",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Harbor Edge 3",
+          "x": -1.18,
+          "y": -1.65,
+          "distanceKm": 2.03,
+          "address": "Unit 26, Harbor Walk (fictional)",
+          "monthlyOrders": 610,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-03",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Harbor 3",
+          "x": 0.35,
+          "y": 0.17,
+          "distanceKm": 0.38,
+          "address": "Unit 26, Harbor Walk (fictional)",
+          "monthlyOrders": 760,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 16,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-08",
+          "role": "competitor",
+          "brand": "Cloudleaf",
+          "name": "Cloudleaf · Harbor 8",
+          "x": 0.04,
+          "y": -0.49,
+          "distanceKm": 0.49,
+          "address": "Unit 61, Harbor Walk (fictional)",
+          "monthlyOrders": 800,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 21,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-09",
+          "role": "competitor",
+          "brand": "Daily Draft",
+          "name": "Daily Draft · Harbor 9",
+          "x": 0.36,
+          "y": -0.6,
+          "distanceKm": 0.7,
+          "address": "Unit 68, Harbor Walk (fictional)",
+          "monthlyOrders": 830,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 12,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 13,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-07",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Harbor 7",
+          "x": -1.18,
+          "y": -1.04,
+          "distanceKm": 1.57,
+          "address": "Unit 54, Harbor Walk (fictional)",
+          "monthlyOrders": 590,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 22,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 24,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-04",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Harbor 4",
+          "x": -1.58,
+          "y": -0.18,
+          "distanceKm": 1.59,
+          "address": "Unit 33, Harbor Walk (fictional)",
+          "monthlyOrders": 600,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 23,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 25,
+              "promotionLabel": "Spend 30 save 8",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-10",
+          "role": "competitor",
+          "brand": "Daily Draft",
+          "name": "Daily Draft · Harbor 10",
+          "x": -1.67,
+          "y": 0.55,
+          "distanceKm": 1.76,
+          "address": "Unit 75, Harbor Walk (fictional)",
+          "monthlyOrders": 640,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 16,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-02",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Harbor 2",
+          "x": -1.29,
+          "y": -1.5,
+          "distanceKm": 1.98,
+          "address": "Unit 19, Harbor Walk (fictional)",
+          "monthlyOrders": 600,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.0,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-01",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Harbor 1",
+          "x": 0.69,
+          "y": 1.89,
+          "distanceKm": 2.01,
+          "address": "Unit 12, Harbor Walk (fictional)",
+          "monthlyOrders": 580,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-06",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Harbor 6",
+          "x": -1.36,
+          "y": -2.07,
+          "distanceKm": 2.47,
+          "address": "Unit 47, Harbor Walk (fictional)",
+          "monthlyOrders": 610,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 21,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 22,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "harbor-central-cp-05",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Harbor 5",
+          "x": 0.43,
+          "y": 2.69,
+          "distanceKm": 2.72,
+          "address": "Unit 40, Harbor Walk (fictional)",
+          "monthlyOrders": 450,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 16,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        }
+      ]
+    },
+    {
+      "id": "riverside-commons",
+      "name": "Riverside Commons",
+      "shortName": "Riverside",
+      "description": "Fictional mixed-use neighbourhood with family weekend demand and moderate delivery density.",
+      "center": {
+        "x": 0,
+        "y": 0
+      },
+      "coverageRadiusKm": 3,
+      "profileNote": "Medium traffic · medium competition · balanced promotion intensity",
+      "stores": [
+        {
+          "id": "riverside-commons-ns-01",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Riverside Core 1",
+          "x": -0.21,
+          "y": 0.1,
+          "distanceKm": 0.23,
+          "address": "Unit 12, Riverside Walk (fictional)",
+          "monthlyOrders": 570,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 21,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-ns-03",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Riverside Edge 3",
+          "x": -1.58,
+          "y": 0.17,
+          "distanceKm": 1.59,
+          "address": "Unit 26, Riverside Walk (fictional)",
+          "monthlyOrders": 530,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 11,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-ns-02",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Riverside Edge 2",
+          "x": -1.29,
+          "y": -1.44,
+          "distanceKm": 1.94,
+          "address": "Unit 19, Riverside Walk (fictional)",
+          "monthlyOrders": 540,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-01",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Riverside 1",
+          "x": 0.36,
+          "y": -0.13,
+          "distanceKm": 0.38,
+          "address": "Unit 12, Riverside Walk (fictional)",
+          "monthlyOrders": 510,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 11,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 13,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-06",
+          "role": "competitor",
+          "brand": "Cloudleaf",
+          "name": "Cloudleaf · Riverside 6",
+          "x": -0.47,
+          "y": -0.49,
+          "distanceKm": 0.68,
+          "address": "Unit 47, Riverside Walk (fictional)",
+          "monthlyOrders": 440,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 17,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 5
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-02",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Riverside 2",
+          "x": -0.59,
+          "y": 0.61,
+          "distanceKm": 0.85,
+          "address": "Unit 19, Riverside Walk (fictional)",
+          "monthlyOrders": 490,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 15,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-03",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Riverside 3",
+          "x": 1.22,
+          "y": 1.36,
+          "distanceKm": 1.83,
+          "address": "Unit 26, Riverside Walk (fictional)",
+          "monthlyOrders": 470,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 8,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 11,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-04",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Riverside 4",
+          "x": -2.04,
+          "y": -1.33,
+          "distanceKm": 2.43,
+          "address": "Unit 33, Riverside Walk (fictional)",
+          "monthlyOrders": 510,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 10,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 12,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-07",
+          "role": "competitor",
+          "brand": "Daily Draft",
+          "name": "Daily Draft · Riverside 7",
+          "x": -0.2,
+          "y": 2.45,
+          "distanceKm": 2.45,
+          "address": "Unit 54, Riverside Walk (fictional)",
+          "monthlyOrders": 420,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "riverside-commons-cp-05",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Riverside 5",
+          "x": -0.6,
+          "y": 2.58,
+          "distanceKm": 2.65,
+          "address": "Unit 40, Riverside Walk (fictional)",
+          "monthlyOrders": 390,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.0,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        }
+      ]
+    },
+    {
+      "id": "maple-square",
+      "name": "Maple Square",
+      "shortName": "Maple",
+      "description": "Fictional suburban town centre with low competitor density and stable repeat demand.",
+      "center": {
+        "x": 0,
+        "y": 0
+      },
+      "coverageRadiusKm": 3,
+      "profileNote": "Medium traffic · low competition · light promotion intensity",
+      "stores": [
+        {
+          "id": "maple-square-ns-02",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Maple Core 2",
+          "x": -0.17,
+          "y": -0.15,
+          "distanceKm": 0.23,
+          "address": "Unit 19, Maple Walk (fictional)",
+          "monthlyOrders": 690,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 6,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 0.5,
+              "promotionPct": 7,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 5
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-ns-01",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Maple Core 1",
+          "x": 0.55,
+          "y": 0.43,
+          "distanceKm": 0.7,
+          "address": "Unit 12, Maple Walk (fictional)",
+          "monthlyOrders": 600,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 9,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 11,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-ns-03",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Maple Edge 3",
+          "x": -1.86,
+          "y": -0.53,
+          "distanceKm": 1.94,
+          "address": "Unit 26, Maple Walk (fictional)",
+          "monthlyOrders": 490,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 7,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.0,
+              "promotionPct": 10,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-cp-03",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Maple 3",
+          "x": -0.18,
+          "y": -1.3,
+          "distanceKm": 1.32,
+          "address": "Unit 26, Maple Walk (fictional)",
+          "monthlyOrders": 500,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 1.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-cp-01",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Maple 1",
+          "x": 1.34,
+          "y": -0.02,
+          "distanceKm": 1.34,
+          "address": "Unit 12, Maple Walk (fictional)",
+          "monthlyOrders": 410,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 5
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-cp-04",
+          "role": "competitor",
+          "brand": "Cloudleaf",
+          "name": "Cloudleaf · Maple 4",
+          "x": -0.04,
+          "y": -1.39,
+          "distanceKm": 1.39,
+          "address": "Unit 33, Maple Walk (fictional)",
+          "monthlyOrders": 480,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.0,
+              "promotionPct": 9,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.0,
+              "promotionPct": 9,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "maple-square-cp-02",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Maple 2",
+          "x": 0.06,
+          "y": 1.64,
+          "distanceKm": 1.64,
+          "address": "Unit 19, Maple Walk (fictional)",
+          "monthlyOrders": 430,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 2.5,
+              "promotionPct": 8,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 1.0,
+              "promotionPct": 8,
+              "promotionLabel": "Spend 25 save 2",
+              "couponValue": 5
+            }
+          },
+          "source": "synthetic"
+        }
+      ]
+    },
+    {
+      "id": "northgate-park",
+      "name": "Northgate Park",
+      "shortName": "Northgate",
+      "description": "Fictional transit-adjacent district with strong competitor activity and lower resident density.",
+      "center": {
+        "x": 0,
+        "y": 0
+      },
+      "coverageRadiusKm": 3,
+      "profileNote": "Lower traffic · high competition · high promotion intensity",
+      "stores": [
+        {
+          "id": "northgate-park-ns-01",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Northgate Core 1",
+          "x": 0.59,
+          "y": -0.43,
+          "distanceKm": 0.73,
+          "address": "Unit 12, Northgate Walk (fictional)",
+          "monthlyOrders": 520,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 15,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-ns-02",
+          "role": "focus",
+          "brand": "Northstar Tea",
+          "name": "Northstar Tea · Northgate Edge 2",
+          "x": 0.39,
+          "y": 1.24,
+          "distanceKm": 1.3,
+          "address": "Unit 19, Northgate Walk (fictional)",
+          "monthlyOrders": 400,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 24,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 25,
+              "promotionLabel": "Spend 30 save 8",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-06",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Northgate 6",
+          "x": -0.55,
+          "y": 0.2,
+          "distanceKm": 0.58,
+          "address": "Unit 47, Northgate Walk (fictional)",
+          "monthlyOrders": 380,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 4.0,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-03",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Northgate 3",
+          "x": -0.38,
+          "y": 0.82,
+          "distanceKm": 0.91,
+          "address": "Unit 26, Northgate Walk (fictional)",
+          "monthlyOrders": 450,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 22,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 23,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-02",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Northgate 2",
+          "x": 0.59,
+          "y": -1.46,
+          "distanceKm": 1.58,
+          "address": "Unit 19, Northgate Walk (fictional)",
+          "monthlyOrders": 400,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.0,
+              "promotionPct": 14,
+              "promotionLabel": "Spend 30 save 4",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 4.0,
+              "promotionPct": 17,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 0
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-01",
+          "role": "competitor",
+          "brand": "Cedar & Co.",
+          "name": "Cedar & Co. · Northgate 1",
+          "x": -1.59,
+          "y": -0.96,
+          "distanceKm": 1.86,
+          "address": "Unit 12, Northgate Walk (fictional)",
+          "monthlyOrders": 470,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 20,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 23,
+              "promotionLabel": "Spend 30 save 7",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-05",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Northgate 5",
+          "x": 1.8,
+          "y": -1.09,
+          "distanceKm": 2.11,
+          "address": "Unit 40, Northgate Walk (fictional)",
+          "monthlyOrders": 340,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-08",
+          "role": "competitor",
+          "brand": "Cloudleaf",
+          "name": "Cloudleaf · Northgate 8",
+          "x": -1.29,
+          "y": -1.73,
+          "distanceKm": 2.16,
+          "address": "Unit 61, Northgate Walk (fictional)",
+          "monthlyOrders": 330,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 18,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 2
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 5
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-07",
+          "role": "competitor",
+          "brand": "Pine Cup",
+          "name": "Pine Cup · Northgate 7",
+          "x": -1.64,
+          "y": 1.68,
+          "distanceKm": 2.35,
+          "address": "Unit 54, Northgate Walk (fictional)",
+          "monthlyOrders": 430,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 13,
+              "promotionLabel": "Spend 25 save 3",
+              "couponValue": 5
+            },
+            "Marketplace B": {
+              "deliveryFee": 3.0,
+              "promotionPct": 16,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-09",
+          "role": "competitor",
+          "brand": "Daily Draft",
+          "name": "Daily Draft · Northgate 9",
+          "x": -2.04,
+          "y": -1.25,
+          "distanceKm": 2.4,
+          "address": "Unit 68, Northgate Walk (fictional)",
+          "monthlyOrders": 370,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 4.0,
+              "promotionPct": 17,
+              "promotionLabel": "Spend 30 save 5",
+              "couponValue": 3
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 19,
+              "promotionLabel": "Spend 30 save 6",
+              "couponValue": 3
+            }
+          },
+          "source": "synthetic"
+        },
+        {
+          "id": "northgate-park-cp-04",
+          "role": "competitor",
+          "brand": "Mori Tea",
+          "name": "Mori Tea · Northgate 4",
+          "x": -1.61,
+          "y": -1.86,
+          "distanceKm": 2.46,
+          "address": "Unit 33, Northgate Walk (fictional)",
+          "monthlyOrders": 330,
+          "channels": {
+            "Marketplace A": {
+              "deliveryFee": 3.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 0
+            },
+            "Marketplace B": {
+              "deliveryFee": 2.5,
+              "promotionPct": 0,
+              "promotionLabel": "No promotion",
+              "couponValue": 2
+            }
+          },
+          "source": "synthetic"
+        }
+      ]
+    }
+  ]
+}
