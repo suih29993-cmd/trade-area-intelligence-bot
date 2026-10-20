@@ -347,8 +347,8 @@ code {
 .brand-bar-row .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .brand-bar-row .value { text-align: right; color: var(--ink); }
 .table-wrap { overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; font-size: 10.5px; min-width: 430px; }
-.data-table th, .data-table td { padding: 6px 7px; border: 1px solid var(--line); text-align: center; white-space: nowrap; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 10.5px; min-width: 380px; }
+.data-table th, .data-table td { padding: 6px 5px; border: 1px solid var(--line); text-align: center; white-space: nowrap; }
 .data-table th { background: var(--panel-soft); color: var(--sub); font-weight: 650; }
 .data-table td.left, .data-table th.left { text-align: left; }
 .data-table tr.best td { background: #f6fbf8; color: var(--good); font-weight: 650; }

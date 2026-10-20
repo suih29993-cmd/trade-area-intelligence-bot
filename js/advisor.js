@@ -10,7 +10,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  var DISCLAIMER = '以下结论仅基于本项目的合成演示数据，不代表任何真实门店或真实经营结果。';
+  var DISCLAIMER = 'These conclusions are based only on this project\'s synthetic demonstration data and do not represent any real store or business result.';
 
   function pct(value) {
     return Math.round(value * 100) + '%';
@@ -26,11 +26,11 @@
 
   function detectIntent(message) {
     var text = String(message || '').toLowerCase();
-    if (/竞争|竞对|对手|品牌|compet/.test(text)) { return 'competition'; }
-    if (/活动|优惠|促销|折扣|promo|coupon|券/.test(text)) { return 'promotion'; }
-    if (/门店|覆盖|选址|布点|store|coverage/.test(text)) { return 'coverage'; }
-    if (/配送|运费|履约|delivery|fee/.test(text)) { return 'delivery'; }
-    if (/销售|月售|订单|份额|sales|order|share/.test(text)) { return 'sales'; }
+    if (/compet|rival|brand|pressure|market/.test(text)) { return 'competition'; }
+    if (/promo|coupon|discount|offer|deal/.test(text)) { return 'promotion'; }
+    if (/store|coverage|location|footprint|site/.test(text)) { return 'coverage'; }
+    if (/delivery|fee|fulfill|shipping/.test(text)) { return 'delivery'; }
+    if (/sales|order|revenue|share|volume/.test(text)) { return 'sales'; }
     return 'overview';
   }
 
@@ -43,42 +43,42 @@
     if (focus.core === 0) {
       recommendations.push({
         priority: 'high',
-        title: '核心圈覆盖缺口',
-        detail: '1 km 核心圈内没有焦点品牌门店。优先评估快闪、联营柜位或小型外送点，而不是直接开设大店。'
+        title: 'Core-ring coverage gap',
+        detail: 'No focus-brand store is in the 1 km core ring. Evaluate a pop-up, shared counter, or small delivery-only site before committing to a large store.'
       });
     } else if (focus.total <= 2) {
       recommendations.push({
         priority: 'high',
-        title: '门店密度偏低',
-        detail: '3 km 内仅 ' + focus.total + ' 家焦点品牌门店，建议用订单热区与配送半径做补点测算。'
+        title: 'Low store density',
+        detail: 'Only ' + focus.total + ' focus-brand stores are within 3 km. Use order hotspots and delivery radius to size a potential new location.'
       });
     }
 
     if (competitors.total >= 10 || (competitors.topBrand && competitors.topBrand.count >= 3)) {
       recommendations.push({
         priority: 'high',
-        title: '竞对密度预警',
-        detail: '3 km 内共有 ' + competitors.total + ' 家竞品门店，头部竞品 ' +
-          (competitors.topBrand ? competitors.topBrand.brand : '—') + ' 已有 ' +
-          (competitors.topBrand ? competitors.topBrand.count : 0) + ' 家。建议先做差异化产品与时段运营，避免直接价格战。'
+        title: 'Competitor-density warning',
+        detail: 'There are ' + competitors.total + ' competitor stores within 3 km. The leading competitor, ' +
+          (competitors.topBrand ? competitors.topBrand.brand : '—') + ', already has ' +
+          (competitors.topBrand ? competitors.topBrand.count : 0) + ' stores. Prioritize product differentiation and daypart operations over a direct price war.'
       });
     }
 
     if (analysis.market.focusShare < 0.35) {
       recommendations.push({
         priority: 'medium',
-        title: '模拟订单份额偏低',
-        detail: '焦点品牌模拟订单份额为 ' + pct(analysis.market.focusShare) +
-          '。可优先检查核心 SKU 曝光、起送价与高峰时段履约，而不是全量降价。'
+        title: 'Low simulated order share',
+        detail: 'The focus brand has a simulated order share of ' + pct(analysis.market.focusShare) +
+          '. First inspect core-SKU visibility, minimum order value, and peak-hour fulfillment instead of broadly cutting prices.'
       });
     }
 
     if (signals.focusPromoCoverage + 10 < signals.competitorPromoCoverage) {
       recommendations.push({
         priority: 'medium',
-        title: '活动覆盖存在差距',
-        detail: '焦点品牌活动覆盖率 ' + signals.focusPromoCoverage + '%，竞品为 ' +
-          signals.competitorPromoCoverage + '%。建议只对高潜门店补齐活动，不做无差别补贴。'
+        title: 'Promotion coverage gap',
+        detail: 'Focus-brand promotion coverage is ' + signals.focusPromoCoverage + '%, versus ' +
+          signals.competitorPromoCoverage + '% for competitors. Extend offers only at high-potential stores rather than applying broad subsidies.'
       });
     }
 
@@ -86,17 +86,17 @@
         signals.focusAvgFee > signals.competitorAvgFee + 0.5) {
       recommendations.push({
         priority: 'medium',
-        title: '配送费高于竞品',
-        detail: '焦点品牌模拟平均配送费 ' + money(signals.focusAvgFee) + ' 元，竞品为 ' +
-          money(signals.competitorAvgFee) + ' 元。可测试配送费立减或满额免配。'
+        title: 'Delivery fee above competitors',
+        detail: 'The focus-brand simulated average delivery fee is ' + money(signals.focusAvgFee) + ' CNY, versus ' +
+          money(signals.competitorAvgFee) + ' CNY for competitors. Test a delivery-fee discount or a free-delivery threshold.'
       });
     }
 
     if (!recommendations.length) {
       recommendations.push({
         priority: 'low',
-        title: '维持并持续监测',
-        detail: '当前模拟指标没有触发高优先级信号。建议继续跟踪竞品活动和核心圈订单变化。'
+        title: 'Maintain and monitor',
+        detail: 'The current synthetic metrics do not trigger a high-priority signal. Continue tracking competitor promotions and core-ring order changes.'
       });
     }
     return recommendations;
@@ -105,17 +105,17 @@
   function buildRisks(analysis) {
     var risks = [];
     var signals = analysis.signals;
-    if (analysis.focus.core === 0) { risks.push('核心圈覆盖为空，高峰期可能被竞品截流。'); }
-    if (analysis.competitors.total >= 10) { risks.push('竞品门店密度高，单纯依赖自然流量不稳定。'); }
-    if (analysis.market.focusShare < 0.35) { risks.push('模拟订单份额低于 35%，需要验证曝光与转化环节。'); }
+    if (analysis.focus.core === 0) { risks.push('Core-ring coverage is empty, so competitors may capture peak-hour demand.'); }
+    if (analysis.competitors.total >= 10) { risks.push('Competitor store density is high; organic traffic alone may be unstable.'); }
+    if (analysis.market.focusShare < 0.35) { risks.push('Simulated order share is below 35%; visibility and conversion need validation.'); }
     if (signals.focusPromoCoverage + 10 < signals.competitorPromoCoverage) {
-      risks.push('活动覆盖落后，可能影响新客试用与复购。');
+      risks.push('Promotion coverage trails competitors and may limit new-customer trial and repeat purchase.');
     }
     if (signals.focusAvgFee != null && signals.competitorAvgFee != null &&
         signals.focusAvgFee > signals.competitorAvgFee + 0.5) {
-      risks.push('配送费高于竞品，低客单订单的转化可能承压。');
+      risks.push('Delivery fees are above competitors, which may pressure conversion on low-ticket orders.');
     }
-    if (!risks.length) { risks.push('当前模拟数据未触发明显风险信号，但仍需用真实业务数据复核。'); }
+    if (!risks.length) { risks.push('The synthetic data does not trigger a clear risk signal, but any real-world use would require validation with actual business data.'); }
     return risks;
   }
 
@@ -124,54 +124,54 @@
     var competitors = analysis.competitors;
     var signals = analysis.signals;
     if (intent === 'competition') {
-      return '竞对压力：3 km 内 ' + competitors.total + ' 家竞品、' + competitors.brandCount +
-        ' 个品牌；头部品牌为 ' + (competitors.topBrand ? competitors.topBrand.brand : '—') +
-        '。竞对压力维度得分 ' + analysis.dimensions.competition + '/100（越高表示压力越低）。';
+      return 'Competitor pressure: ' + competitors.total + ' competitor stores and ' + competitors.brandCount +
+        ' brands within 3 km. The leading brand is ' + (competitors.topBrand ? competitors.topBrand.brand : '—') +
+        '. The competitor-pressure score is ' + analysis.dimensions.competition + '/100 (higher means lower pressure).';
     }
     if (intent === 'promotion') {
-      return '活动力度：焦点品牌活动覆盖率 ' + signals.focusPromoCoverage + '%，竞品 ' +
-        signals.competitorPromoCoverage + '%；平均活动深度 ' + money(signals.focusPromoDepth) +
-        '% 对 ' + money(signals.competitorPromoDepth) + '%。活动维度得分 ' +
-        analysis.dimensions.promotion + '/100。';
+      return 'Promotion intensity: focus-brand promotion coverage is ' + signals.focusPromoCoverage + '% versus ' +
+        signals.competitorPromoCoverage + '% for competitors; average promotion depth is ' + money(signals.focusPromoDepth) +
+        '% versus ' + money(signals.competitorPromoDepth) + '%. The promotion score is ' +
+        analysis.dimensions.promotion + '/100.';
     }
     if (intent === 'coverage') {
-      return '门店覆盖：焦点品牌 3 km 内 ' + focus.total + ' 家，其中核心圈 ' + focus.core +
-        ' 家、外围 ' + focus.ring + ' 家；覆盖维度得分 ' + analysis.dimensions.coverage + '/100。';
+      return 'Store coverage: the focus brand has ' + focus.total + ' stores within 3 km, including ' + focus.core +
+        ' in the core ring and ' + focus.ring + ' in the outer ring. The coverage score is ' + analysis.dimensions.coverage + '/100.';
     }
     if (intent === 'delivery') {
-      return '配送体验：焦点品牌模拟平均配送费 ' + money(signals.focusAvgFee) + ' 元，竞品 ' +
-        money(signals.competitorAvgFee) + ' 元；配送维度得分 ' + analysis.dimensions.delivery + '/100。';
+      return 'Delivery experience: the focus-brand simulated average delivery fee is ' + money(signals.focusAvgFee) + ' CNY versus ' +
+        money(signals.competitorAvgFee) + ' CNY for competitors. The delivery score is ' + analysis.dimensions.delivery + '/100.';
     }
     if (intent === 'sales') {
-      return '销售体量：焦点品牌模拟月售 ' + int(focus.orders) + ' 单，竞品 ' +
-        int(competitors.orders) + ' 单；模拟份额 ' + pct(analysis.market.focusShare) +
-        '，销售维度得分 ' + analysis.dimensions.sales + '/100。';
+      return 'Sales volume: the focus brand has ' + int(focus.orders) + ' simulated monthly orders versus ' +
+        int(competitors.orders) + ' for competitors; simulated share is ' + pct(analysis.market.focusShare) +
+        '. The sales score is ' + analysis.dimensions.sales + '/100.';
     }
-    return '综合健康度 ' + analysis.health + '/100（' + analysis.healthLabel + '）。' +
-      '焦点品牌 ' + focus.total + ' 家门店、' + int(focus.orders) + ' 单模拟月售；竞品 ' +
-      competitors.total + ' 家、' + competitors.brandCount + ' 个品牌。';
+    return 'Overall health is ' + analysis.health + '/100 (' + analysis.healthLabel + '). ' +
+      'The focus brand has ' + focus.total + ' stores and ' + int(focus.orders) + ' simulated monthly orders; competitors have ' +
+      competitors.total + ' stores across ' + competitors.brandCount + ' brands.';
   }
 
   function buildAdvice(district, analysis, message) {
     var intent = detectIntent(message);
     var recommendations = buildRecommendations(analysis);
     var evidence = [
-      '商圈：' + district.name + '（虚构演示商圈，3 km 覆盖圈）',
-      '焦点品牌门店：' + analysis.focus.total + ' 家（核心圈 ' + analysis.focus.core +
-        ' 家 / 外围 ' + analysis.focus.ring + ' 家）',
-      '竞品门店：' + analysis.competitors.total + ' 家 / ' + analysis.competitors.brandCount + ' 个品牌',
-      '模拟月售：焦点品牌 ' + int(analysis.focus.orders) + ' 单，竞品 ' + int(analysis.competitors.orders) +
-        ' 单，焦点份额 ' + pct(analysis.market.focusShare),
-      '模拟平均配送费：焦点品牌 ' + money(analysis.signals.focusAvgFee) + ' 元，竞品 ' +
-        money(analysis.signals.competitorAvgFee) + ' 元',
-      '健康度维度：覆盖 ' + analysis.dimensions.coverage + ' / 竞对 ' +
-        analysis.dimensions.competition + ' / 活动 ' + analysis.dimensions.promotion +
-        ' / 销售 ' + analysis.dimensions.sales + ' / 配送 ' + analysis.dimensions.delivery
+      'District: ' + district.name + ' (fictional demonstration district, 3 km coverage ring)',
+      'Focus-brand stores: ' + analysis.focus.total + ' (core ring ' + analysis.focus.core +
+        ' / outer ring ' + analysis.focus.ring + ')',
+      'Competitor stores: ' + analysis.competitors.total + ' / ' + analysis.competitors.brandCount + ' brands',
+      'Simulated monthly orders: focus brand ' + int(analysis.focus.orders) + ', competitors ' + int(analysis.competitors.orders) +
+        ', focus share ' + pct(analysis.market.focusShare),
+      'Simulated average delivery fee: focus brand ' + money(analysis.signals.focusAvgFee) + ' CNY, competitors ' +
+        money(analysis.signals.competitorAvgFee) + ' CNY',
+      'Health dimensions: coverage ' + analysis.dimensions.coverage + ' / competition ' +
+        analysis.dimensions.competition + ' / promotion ' + analysis.dimensions.promotion +
+        ' / sales ' + analysis.dimensions.sales + ' / delivery ' + analysis.dimensions.delivery
     ];
 
     return {
       intent: intent,
-      title: district.name + ' · 结构化诊断',
+      title: district.name + ' · Structured diagnosis',
       summary: intentSummary(intent, analysis),
       evidence: evidence,
       risks: buildRisks(analysis),

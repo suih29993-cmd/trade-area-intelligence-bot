@@ -1,29 +1,29 @@
-# 作品集描述素材
+# Portfolio Notes
 
-以下文案只描述实现范围和技术能力，不声称真实业务收益，也不使用未经验证的量化成果。
+The text below describes implementation scope and technical capability only. It makes no claim about real business outcomes and uses no unverified quantitative results.
 
-## 一句话版本
+## One-sentence summary
 
-独立完成一个离线可运行的商圈健康度诊断 Demo，覆盖合成数据生成、指标建模、SVG 可视化、多商圈对比、结构化诊断对话和本地服务安全加固。
+Independently built an offline-runnable district health diagnostics demo covering synthetic data generation, metric modeling, SVG visualization, multi-district comparison, structured diagnostic chat, and local-service hardening.
 
-## 三条项目要点
+## Three project highlights
 
-- 设计并实现五维商圈健康度模型，将门店覆盖、竞对压力、活动力度、销售体量和配送体验拆解为可解释指标。
-- 使用原生 JavaScript 和 SVG 完成单商圈诊断、多商圈雷达对比、虚构地图点位交互和响应式布局，不依赖第三方地图或前端框架。
-- 使用 Python 标准库实现本地服务、静态资源白名单、CSP、请求体限制、目录穿越防护和默认关闭的可选 AI 适配器。
+- Designed and implemented a five-dimension district health model that decomposes store coverage, competitor pressure, promotion intensity, sales volume, and delivery experience into explainable metrics.
+- Built single-district diagnostics, multi-district radar comparison, fictional map-point interaction, and responsive layouts with native JavaScript and SVG, without a third-party map or front-end framework.
+- Implemented a local service with the Python standard library, including static-resource allow-lists, CSP, request-body limits, directory-traversal protection, and an opt-in AI adapter that is disabled by default.
 
-## 六条工程要点
+## Six engineering highlights
 
-- 用确定性生成器构造 4 个虚构商圈、42 家虚构门店，保证演示数据可复现且不含真实业务记录。
-- 将分析逻辑抽成浏览器与 Node 共用的引擎模块，避免 UI 与指标计算耦合。
-- 为导入数据设计 schema 校验、长度限制、坐标范围检查和危险字符拦截。
-- 用本地规则引擎实现意图识别和“摘要—证据—风险—建议”四段式诊断输出。
-- 为本地服务增加静态文件后缀白名单、路径边界检查、安全响应头、无 CORS 和请求体上限。
-- 编写 Python API 测试和 Node 分析测试，覆盖数据、指标、导入、路由和安全边界。
+- Constructed 4 fictional districts and 42 fictional stores with a deterministic generator, making the demo reproducible and free of real business records.
+- Extracted analysis logic into an engine module shared by the browser and Node tests, keeping UI and metric calculation decoupled.
+- Designed schema validation, length limits, coordinate checks, and unsafe-character rejection for imported data.
+- Implemented intent detection and a four-part diagnostic response in the local rule engine: summary, evidence, risks, and recommendations.
+- Added static-file extension allow-lists, path-boundary checks, secure response headers, disabled CORS, and request-body limits to the local service.
+- Wrote Python API tests and Node analysis tests covering data, metrics, imports, routing, and security boundaries.
 
-## 面试讲述角度
+## Interview discussion angles
 
-1. **从业务问题到指标**：先定义“健康度”由哪些可观察维度构成，再为每个维度设计可复现公式。
-2. **从指标到交互**：单商圈用于诊断，多商圈用于横向比较，地图用于定位覆盖缺口。
-3. **从 Demo 到工程**：补上数据校验、错误回退、日志脱敏、安全响应头和自动化测试。
-4. **从真实项目到公开作品**：用重新生成的合成数据替换真实记录，移除外部服务依赖，默认离线运行。
+1. **Business question to metrics:** define which observable dimensions make up "health," then design a reproducible formula for each dimension.
+2. **Metrics to interaction:** use a single-district view for diagnosis, multi-district comparison for benchmarking, and the map for coverage gaps.
+3. **Demo to engineering:** add data validation, fallback behavior, log redaction, secure headers, and automated tests.
+4. **Real project to public artifact:** replace real records with regenerated synthetic data, remove external dependencies, and run offline by default.

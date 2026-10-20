@@ -1,79 +1,97 @@
 # Security Audit · Public Portfolio Edition
 
-审计日期：2026-10-20  
-审计对象：原始本地项目快照、本机相关运行痕迹、公开副本
+Audit date: 2026-10-20
+Scope: original local project snapshot, related local runtime traces, public copy, and English conversion
 
-## 结论摘要
+## Executive summary
 
-- 原始项目已跟踪源码、README、配置示例和本地 Git 历史中，**未发现硬编码的有效 API Key、`securityJsCode`、Bearer Token 或其他公开凭证**。
-- 原始项目包含真实商圈名称、真实坐标、真实品牌与平台语境，以及向外部地图、搜索和 AI 服务发送业务上下文的实时流程，**不适合直接公开发布**。
-- 本公开副本已改为纯合成数据、本地 SVG 地图、确定性规则对话和默认关闭的可选服务端 AI；不复制原始项目数据、配置、日志或 Git 历史。
-- 本机 Chrome 的一个配置文件中发现旧版站点 `localStorage` 的历史安全密钥键名痕迹。未读取或输出其值；若该浏览器配置文件曾备份、共享或被复制，应按凭证泄露处理并轮换。
-- 本机 Chrome 与 Edge 的历史记录扫描未发现访问旧版 `/api/chat` 且携带凭证查询参数的 URL。
+- The original project's tracked source, README, configuration example, and local Git history contained **no hardcoded valid API key, `securityJsCode`, Bearer token, or other published credential**.
+- The original project contained real district names, real coordinates, real-brand and platform context, plus live flows that sent business context to external map, search, and AI services. It was **not suitable for direct public release**.
+- This public copy uses synthetic data only, a local SVG map, deterministic rule-based chat, and optional server-side AI that is disabled by default. It copies no original data, configuration, logs, or Git history.
+- A Chrome profile contained key-name traces from the legacy site's `localStorage`. No key value was read or printed. If that browser profile has been backed up, shared, or copied, treat the related credentials as exposed and rotate them.
+- Read-only history scans of Chrome and Edge found no URL that called the legacy `/api/chat` endpoint with a credential query parameter.
+- The English conversion was validated with an ASCII-source CJK regex. All text sources in the public copy are now expected to contain no CJK characters.
 
-本报告不输出任何完整凭证、凭证片段或可复用的认证信息。
+This report includes no complete credential, credential fragment, or reusable authentication value.
 
-## 审计范围与方法
+## Scope and method
 
-原始快照：
+Original snapshot:
 
-- 分支状态：`main` 与本地记录的 `origin/main` 指向同一提交，工作区无未提交改动。
-- Git 形态：1 个初始提交、11 个已跟踪文件、11 个 blob、3 个 tree、无不可达对象。
-- 检查了源码、README、`.gitignore`、启动/停止脚本、被忽略的本地服务日志、Git 配置、refs、对象和 reflog。
-- 原始目录没有 `.env`、导入导出数据文件、截图目录或依赖锁文件。
-- 使用文件清单、Git 对象枚举、`git fsck`、reflog 检查、正则凭证扫描和人工代码审查。
-- 凭证扫描结果只记录类型和位置，不记录匹配值。
+- Branch state: `main` and the locally recorded `origin/main` pointed to the same commit; the worktree had no uncommitted changes.
+- Git shape: one initial commit, 11 tracked files, 11 blobs, 3 trees, and no unreachable objects.
+- Reviewed source, README, `.gitignore`, start/stop scripts, ignored local service logs, Git configuration, refs, objects, and reflog.
+- The original directory had no `.env`, import/export data files, screenshot directory, or dependency lock file.
+- Used file inventory, Git object enumeration, `git fsck`, reflog inspection, regular-expression credential scans, and manual code review.
+- Credential scan results record only type and location, never matched values.
 
-本机痕迹：
+Local traces:
 
-- 对 Chrome 与 Edge 的 `Local Storage`、`Session Storage` 做了旧版键名存在性扫描。
-- 对 Chrome 与 Edge 的 History 数据库做只读查询，检查旧版聊天接口 URL 与凭证查询参数。
-- 未调用任何外部 API，未验证历史 Key 是否仍然有效。
+- Searched Chrome and Edge `Local Storage` and `Session Storage` for legacy key-name markers.
+- Ran read-only queries against Chrome and Edge History databases for legacy chat endpoint URLs and credential query parameters.
+- Called no external API and did not test whether historical keys remain valid.
 
-## 主要发现
+Public-copy conversion:
 
-| 编号 | 区域 | 观察 | 风险 | 公开副本处理 |
+- Scanned all text files for CJK characters with the ASCII source pattern `[\u4e00-\u9fff]`.
+- Replaced UI labels, runtime messages, diagnostic text, health labels, server prompts, tests, and documentation with English.
+- Regenerated screenshots from the English UI, not from the legacy screenshots.
+- The original local project directory was not modified.
+
+## Key findings
+
+| ID | Area | Observation | Risk | Public-copy handling |
 | --- | --- | --- | --- | --- |
-| A1 | 源码凭证 | 未发现硬编码 Key；代码从浏览器输入、进程环境变量或本地存储读取 | 中：真实 Key 会进入客户端与运行环境 | 浏览器不保存凭证；仅服务端环境变量，默认关闭 |
-| A2 | 浏览器存储 | 旧版前端把地图 Key、地图安全密钥、搜索 Key、AI Key 和门店数据写入 `localStorage` | 高：共享浏览器配置文件或截图时可能泄露 | 新前端只在 `localStorage` 保存合成导入数据，不保存凭证 |
-| A3 | 本机残留 | Chrome 一个配置文件的站点存储中出现旧版高德安全密钥键名痕迹 | 高：值可能仍在本机，不能视为安全 | 建议清除站点数据并轮换；本报告不读取值 |
-| A4 | 请求参数 | 旧版支持在 GET 查询参数中传递 AI、搜索和高德 Key | 高：可能进入浏览器历史、终端日志、代理或错误页面 | 新接口只接受无凭证的 JSON 请求；凭证不进浏览器 |
-| A5 | 日志 | 旧版请求日志记录完整请求行，查询参数可能被写入 stdout | 高：GET 方式下存在凭证泄露路径 | 新服务只记录脱敏路径，不含查询串、请求头或请求体 |
-| A6 | 错误信息 | 旧版可能把远端异常字符串返回给页面 | 中：可能暴露内部端点、供应商响应或请求细节 | 新服务返回固定错误码，并回退本地规则引擎 |
-| A7 | CORS 与静态服务 | 旧版允许任意来源并直接以项目根目录提供静态文件 | 中：扩大本地接口与项目文件暴露面 | 新服务无 CORS、仅本机绑定、静态白名单与目录边界检查 |
-| A8 | 外部数据流 | 旧版在配置 Key 后会把商圈上下文和门店信息发送到地图、搜索和 AI 服务 | 高：真实业务数据可能离开本机 | 默认不调用外部服务；实时模式仅发送当前合成商圈聚合指标 |
-| A9 | 真实业务数据 | 内置真实商圈名称、坐标、品牌、平台和示例门店语境 | 高：可推导内部关注区域和业务方法 | 全部替换为固定种子生成的虚构商圈、品牌、点位和指标 |
-| A10 | 运行日志 | 旧版被忽略的服务日志仅有启动/停止时间，未发现凭证或经营记录 | 低 | 不复制任何运行日志 |
-| A11 | Git 历史 | 仅一个初始提交，无不可达对象；扫描未发现硬编码凭证；但提交内容包含真实业务语境 | 高：若仓库已公开，历史本身即数据披露 | 不复制 `.git`；不建议直接公开旧仓库 |
-| A12 | 本机路径 | 旧版脚本使用环境变量定位 Python，未发现硬编码用户名目录；README 未包含个人绝对路径 | 低 | 新副本移除个人路径并加入自动检查 |
-| A13 | 截图/导入导出 | 原始快照未发现截图或导入导出文件 | 低 | 新截图全部来自合成数据 |
+| A1 | Source credentials | No hardcoded key found; legacy code read keys from browser input, process environment, or local storage | Medium: a real key could enter the client and runtime | Browser stores no credentials; live mode uses server-side environment variables only and is off by default |
+| A2 | Browser storage | Legacy front end wrote map, map-security, search, AI keys, and store data to `localStorage` | High: a shared browser profile or screenshot could expose credentials | New front end stores only imported synthetic data; no credentials |
+| A3 | Local residue | A Chrome profile contained the legacy Amap security-key marker | High: the value may still be stored locally | Site-data clearing and key rotation remain required manual actions; this report reads no value |
+| A4 | Request parameters | Legacy endpoints accepted AI, search, and Amap keys in GET query parameters | High: keys could enter browser history, terminal logs, proxies, or error pages | New API accepts only a JSON request without credentials; credentials never enter the browser |
+| A5 | Logging | Legacy request logging recorded full request lines, including possible query parameters | High: GET-based credential exposure path | New server records only redacted paths and omits query strings, headers, and bodies |
+| A6 | Error responses | Legacy code could return remote exception strings to the page | Medium: internal endpoints or provider details could leak | New server returns fixed error codes and falls back to the local rule engine |
+| A7 | CORS and static serving | Legacy code allowed arbitrary origins and served files from the project root | Medium: expanded local API and project-file exposure | New server has no CORS, binds locally, and uses static allow-lists plus path-boundary checks |
+| A8 | External data flow | With keys configured, legacy flows sent district context and store information to map, search, and AI services | High: real business data could leave the machine | External calls are off by default; live mode sends only aggregate metrics for the selected synthetic district |
+| A9 | Real business data | Built-in real district names, coordinates, brand/platform context, and sample store language | High: could reveal areas of internal interest and business methods | Replaced with fixed-seed fictional districts, brands, points, and metrics |
+| A10 | Runtime logs | The ignored legacy service log contained only start/stop times and no credential or operating record | Low | No runtime log is copied |
+| A11 | Git history | One initial commit and no unreachable objects; no hardcoded credential found, but content included real business context | High: publishing the history would disclose data | `.git` history is not copied; the legacy repository is to remain private |
+| A12 | Local paths | Legacy scripts located Python through environment variables; no hardcoded user-home path was found in the snapshot | Low | New copy removes personal paths and adds automated checks |
+| A13 | Screenshots/imports | The original snapshot contained no screenshots or import/export files | Low | New screenshots are generated solely from synthetic data |
 
-## 公开副本的安全改造
+## Public-copy hardening
 
-- 数据全部标记为 `synthetic`，4 个虚构商圈、42 家虚构门店；不使用真实经纬度，仅使用局部 `x/y` 坐标。
-- 焦点品牌与竞品均为中性虚构名称，渠道为 `Marketplace A/B`，地址明确标注 `(fictional)`。
-- 地图改为本地 SVG，无地图瓦片、CDN、字体、遥测或第三方脚本。
-- 对话默认由本地确定性规则引擎完成，输出“摘要—证据—风险—建议”。
-- 可选实时 AI 仅在 `ENABLE_LIVE_AI=1` 且服务端配置完整时启用；凭证不进入浏览器、源码或日志。
-- 实时接口只接收当前内置合成商圈的聚合上下文；导入商圈不参与实时请求。
-- 服务端仅绑定 `127.0.0.1`，使用 CSP、`X-Frame-Options`、`Referrer-Policy`、`Permissions-Policy` 和静态白名单。
-- 请求体 16 KB、消息 500 字符上限；日志不含查询串、请求头和请求体；错误返回固定错误码。
-- 导入数据校验长度、坐标、字段、HTML 标签和控制字符，最多保留 3 个导入商圈。
-- 不包含 `.git`、`.env`、运行日志、缓存、数据库或原始业务文件。
+- All data is marked `synthetic`: 4 fictional districts and 42 fictional stores. No real latitude or longitude is used; only local `x/y` coordinates.
+- The focus brand and competitors use neutral fictional names; channels are `Marketplace A/B`; addresses explicitly end with `(fictional)`.
+- The map is local SVG with no tiles, CDN, font, telemetry, or third-party script.
+- Chat uses a local deterministic rule engine by default and returns Summary, Evidence, Risks, and Recommendations.
+- Optional live AI is enabled only when `ENABLE_LIVE_AI=1` is set and the server configuration is complete. Credentials do not enter the browser, source, or logs.
+- The live endpoint accepts only aggregate context for a built-in synthetic district. Imported districts never use the live path.
+- The server binds only to `127.0.0.1` and applies CSP, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and a static-file allow-list.
+- Request bodies are limited to 16 KB and messages to 500 characters. Logs exclude query strings, headers, and bodies. Errors use fixed codes.
+- Imports validate length, coordinates, fields, HTML angle brackets, and control characters. At most 3 imported districts are retained.
+- The public copy ships no `.env`, runtime log, cache, database, or original business file. The local Git repository created for publishing is not part of the remote file tree.
 
-## 仍需人工确认
+## English conversion verification
 
-1. **轮换凭证**：在服务商控制台撤销并重新创建原项目曾使用的所有高德、搜索和 AI Key；不要只删除文件。
-2. **清理浏览器状态**：清除 `http://127.0.0.1:8123` 的站点数据，尤其是旧版地图安全密钥和各类 Key。
-3. **检查远程仓库**：确认旧仓库及所有分支、标签、Fork、缓存和公开镜像的可见性；本任务未修改远程可见性、未推送、未重写历史。
-4. **历史披露判断**：如果旧仓库曾经公开，应按“真实商圈与业务方法已披露”评估，而不是只看当前分支是否干净。
-5. **终端与截图**：检查是否曾把含查询参数的终端输出、浏览器历史或截图分享给他人；如有，按凭证泄露处理。
-6. **实时模式**：只有当使用者明确配置自己的 HTTPS 兼容接口时才启用；不要导入真实数据后开启实时模式。
-7. **发布前复核**：重新运行 `python tools\check_public_safety.py`，并人工查看截图、README、提交记录和仓库根目录。
+- `index.html` declares `lang="en"`.
+- UI labels, dialogs, errors, map labels, comparison tables, recommendations, and accessibility text are English.
+- `js/advisor.js` uses English intent keywords only; no Chinese regex alternatives remain.
+- `server.py` instructs the optional live model to reply in English with Summary, Evidence, Risks, and Recommendations.
+- Python and Node test fixtures and assertions are English.
+- README, data card, methodology, portfolio notes, security audit, and test report are English.
+- Screenshots were captured from the English interface.
+- `tools/check_public_safety.py` fails on any CJK text in scanned sources.
 
-## 未覆盖事项
+## Remaining manual actions
 
-- 未访问远程 GitHub 仓库，因此未验证远程可见性、Fork、Issues、Actions 日志或 Release 附件。
-- 未验证浏览器历史 Key 是否仍有效，也未调用任何外部服务。
-- 未审计本机其他浏览器配置文件、云盘备份、回收站、剪贴板或终端历史。
-- 未对最终托管平台、域名、TLS 配置和访问控制做生产级渗透测试。
+1. **Rotate credentials:** revoke and recreate every Amap, search, and AI key previously used by the original project in the provider consoles. Deleting local files does not invalidate a leaked key. This cannot be completed from source code alone.
+2. **Clear browser site data:** clear site data for `http://127.0.0.1:8123`, especially legacy map-security and provider key values. If Chrome is running, close it and clear the site data from the correct profile, or use the browser's site-settings controls. The conversion did not terminate the user's browser.
+3. **Keep the legacy repository private:** do not change the old repository's visibility, branches, tags, forks, cache, or mirrors. If it was ever public, evaluate disclosure as a real-business-data incident rather than assuming the current branch is clean.
+4. **Review terminal and screenshot history:** check any shared terminal output, browser history, proxy logs, or screenshots that may contain query parameters. Treat confirmed exposure as a credential incident.
+5. **Use live mode deliberately:** enable it only with an operator-owned HTTPS endpoint. Never enable it after importing real data.
+6. **Re-check before publishing:** run `python tools\check_public_safety.py`, inspect screenshots and the repository root, and confirm that the published tree contains no runtime or cache directories.
+
+## Uncovered items
+
+- The legacy repository was not modified during this task; its remote visibility, forks, issues, Actions logs, and release assets were not changed.
+- Historical keys were not tested for validity, and no external provider was called.
+- Other browser profiles, cloud backups, recycle bins, clipboards, and terminal history were not exhaustively audited.
+- No production-grade penetration test, TLS review, DNS review, or hosting-platform access-control review was performed.

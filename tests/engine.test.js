@@ -67,11 +67,11 @@ test('example import file is accepted', () => {
 
 test('advisor returns structured advice and intent-specific evidence', () => {
   const analysis = engine.analyzeDistrict(dataset.districts[0]);
-  const advice = advisor.buildAdvice(dataset.districts[0], analysis, '竞争激烈吗？');
+  const advice = advisor.buildAdvice(dataset.districts[0], analysis, 'Is competition intense here?');
   assert.equal(advice.intent, 'competition');
-  assert.ok(advice.summary.includes('竞对压力'));
+  assert.ok(advice.summary.includes('Competitor pressure'));
   assert.ok(advice.evidence.length >= 5);
   assert.ok(advice.risks.length >= 1);
   assert.ok(advice.recommendations.length >= 1);
-  assert.ok(advice.disclaimer.includes('合成演示数据'));
+  assert.ok(advice.disclaimer.includes('synthetic demonstration data'));
 });

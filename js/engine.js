@@ -140,10 +140,10 @@
   }
 
   function healthLabel(score) {
-    if (score >= 85) { return '强健'; }
-    if (score >= 70) { return '稳健'; }
-    if (score >= 55) { return '需关注'; }
-    return '偏弱'; }
+    if (score >= 85) { return 'Strong'; }
+    if (score >= 70) { return 'Stable'; }
+    if (score >= 55) { return 'Watch'; }
+    return 'Weak'; }
 
   function analyzeDistrict(district) {
     var allStores = district.stores || [];

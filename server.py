@@ -393,10 +393,10 @@ class DemoHandler(BaseHTTPRequestHandler):
             "You are a retail analytics assistant for a portfolio demonstration. "
             "All data is synthetic and fictional. Never claim it is real business data. "
             "Do not invent metrics that are not present in the JSON. "
-            "Answer in Chinese with four short sections: 摘要, 证据, 风险, 建议. "
+            "Answer in English with four short sections: Summary, Evidence, Risks, Recommendations. "
             "Use only the provided synthetic context and the user's question."
         )
-        user_prompt = "合成数据上下文：\n" + json.dumps(context, ensure_ascii=False) + "\n\n用户问题：" + message.strip()
+        user_prompt = "Synthetic data context:\n" + json.dumps(context, ensure_ascii=False) + "\n\nUser question: " + message.strip()
         try:
             reply = adapter.complete([
                 {"role": "system", "content": system_prompt},

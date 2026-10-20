@@ -1,53 +1,53 @@
 # Data Card · Synthetic District Dataset
 
-## 数据集标识
+## Dataset identity
 
-- 数据类别：`synthetic`
-- 数据文件：`data/demo_districts.json`
-- 生成脚本：`tools/generate_demo_data.py`
-- 规模：4 个虚构商圈、42 家虚构门店、2 个中性渠道
-- 随机性：固定种子与确定性公式，重复生成结果一致
+- Data class: `synthetic`
+- Data file: `data/demo_districts.json`
+- Generator: `tools/generate_demo_data.py`
+- Scale: 4 fictional districts, 42 fictional stores, and 2 neutral channels
+- Randomness: fixed seed and deterministic formulas; repeated generation produces the same result
 
-## 来源与构造方式
+## Provenance and construction
 
-数据集不是对真实门店记录的改名、扰动、抽样或聚合，也不是从地图、外卖平台、网页搜索或 AI 服务导出。它由项目内的生成器从虚构商圈参数出发，按以下步骤构造：
+This dataset is not a renamed, perturbed, sampled, or aggregated copy of real store records. It was not exported from a map, delivery platform, web search, or AI service. The in-project generator starts from fictional district parameters and follows these steps:
 
-1. 定义 4 个不存在于真实地理数据库中的商圈名称与描述。
-2. 为每个商圈生成局部平面坐标，范围限制在中心点周围约 3 km。
-3. 生成焦点品牌与竞品品牌的门店角色、位置、模拟订单量和渠道活动。
-4. 用确定性公式计算距离、活动覆盖、配送费和商圈健康度。
-5. 由测试校验字段范围、距离边界、角色分布和数据类别标记。
+1. Define four district names and descriptions that do not exist in real geographic databases.
+2. Generate local planar coordinates for each district within roughly 3 km of its center.
+3. Generate focus-brand and competitor roles, positions, simulated order volumes, and channel promotions.
+4. Calculate distances, promotion coverage, delivery fees, and district health with deterministic formulas.
+5. Validate field ranges, distance bounds, role distribution, and data-class markers in tests.
 
-页面中的地图是 SVG 网格，不是经纬度地图；点位只表达相对位置，不代表任何真实地点。
+The page displays an SVG grid, not a latitude/longitude map. Points express relative position only and do not represent real places.
 
-## 字段与单位
+## Fields and units
 
-| 字段 | 含义 |
+| Field | Meaning |
 | --- | --- |
-| `x`, `y` | 相对商圈中心的局部平面坐标，单位 km |
-| `distanceKm` | 到商圈中心的距离，单位 km |
-| `monthlyOrders` | 合成月订单量，单位“单” |
-| `deliveryFee` | 合成配送费，单位“元” |
-| `promotionPct` | 合成活动力度，百分比 |
-| `couponValue` | 合成红包面额，单位“元” |
-| `role` | `focus` 或 `competitor`，只用于演示分析 |
+| `x`, `y` | Local planar coordinates relative to the district center, in km |
+| `distanceKm` | Distance from the district center, in km |
+| `monthlyOrders` | Synthetic monthly order count |
+| `deliveryFee` | Synthetic delivery fee in CNY |
+| `promotionPct` | Synthetic promotion depth as a percentage |
+| `couponValue` | Synthetic coupon value in CNY |
+| `role` | `focus` or `competitor`, used only for demonstration analysis |
 
-## 隐私与合规
+## Privacy and compliance
 
-- 不包含姓名、电话、地址、账号、订单号、支付信息或其他个人数据。
-- 不包含真实门店地址、真实经纬度、真实月售、真实配送费或真实平台活动。
-- 不包含任何供应商凭证、API Key、`securityJsCode` 或认证令牌。
-- 导入的数据只进入当前浏览器的 `localStorage`，不会上传到外部服务。
-- 如使用者导入自己的数据，应自行确认数据授权、脱敏和留存要求。
+- Contains no names, phone numbers, addresses, accounts, order IDs, payment information, or other personal data.
+- Contains no real store addresses, coordinates, monthly sales, delivery fees, or platform promotions.
+- Contains no provider credentials, API keys, `securityJsCode`, or authentication tokens.
+- Imported data stays in the current browser's `localStorage` and is not uploaded to external services.
+- Anyone importing their own data is responsible for authorization, de-identification, and retention requirements.
 
-## 局限
+## Limitations
 
-- 健康度公式是作品集演示规则，不是行业标准，也不能用于真实经营决策。
-- 门店分布和订单量仅用于展示交互与计算过程。
-- 没有真实客流、天气、节假日、会员、毛利、退款或履约数据。
-- 没有用户体系、权限体系、数据库或多租户隔离。
+- The health formula is a portfolio demonstration rule, not an industry standard, and must not drive real operating decisions.
+- Store distribution and order volume are used only to demonstrate interaction and calculation.
+- There is no real foot traffic, weather, holiday, membership, gross-margin, refund, or fulfillment data.
+- There is no user system, authorization system, database, or multi-tenant isolation.
 
-## 复现
+## Reproduction
 
 ```powershell
 python tools\generate_demo_data.py

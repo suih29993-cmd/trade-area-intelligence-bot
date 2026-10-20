@@ -1,62 +1,64 @@
 # Test Report · Public Portfolio Edition
 
-执行日期：2026-10-20  
-执行环境：Windows PowerShell、Python 3.12.10、Node.js v24.19.0
+Run date: 2026-10-20
+Environment: Windows PowerShell, Python 3.12.10, Node.js v24.19.0
 
-## 结果总览
+## Result summary
 
-| 检查 | 结果 |
+| Check | Result |
 | --- | --- |
-| Python 服务端测试 | 11 / 11 通过 |
-| Node 分析与对话测试 | 6 / 6 通过 |
-| Python / JavaScript 语法检查 | 通过 |
-| 合成数据确定性复现 | 通过，SHA-256 未变化 |
-| 独立进程 HTTP 冒烟测试 | 通过 |
-| 项目自带启停脚本 | 通过 |
-| 私密文件静态阻断 | 4 / 4 返回 404 |
-| 默认实时 AI 状态 | 关闭，返回 `liveAIEnabled: false` |
-| CORS | 未启用 |
-| 安全响应头 | CSP 等响应头存在 |
-| 公开安全检查脚本 | 通过，扫描 25 个文本文件，0 个问题 |
+| Python server tests | 11 / 11 passed |
+| Node analysis and chat tests | 6 / 6 passed |
+| Python and JavaScript syntax checks | Passed |
+| Synthetic-data deterministic reproduction | Passed; SHA-256 unchanged |
+| Independent-process HTTP smoke test | Passed |
+| Project launcher and stop scripts | Passed |
+| Private-file static blocking | 4 / 4 returned 404 |
+| Default live AI state | Disabled; `liveAIEnabled: false` |
+| CORS | Not enabled |
+| Security headers | CSP and related headers present |
+| Public-safety checker | Passed in a clean export: 25 text files, 0 findings |
+| CJK source scan | 0 CJK findings in text sources |
+| English screenshots | Regenerated and visually reviewed |
 
-## 实际执行
+## Executed checks
 
-### Python 测试
+### Python tests
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-覆盖并通过：
+Covered and passed:
 
-- 健康检查、CSP 和默认演示模式。
-- `/api/config` 不返回任何凭证。
-- 合成数据类别与 4 个基础商圈。
-- 实时 AI 默认禁用。
-- 请求体大小限制。
-- `.env`、源码、运行时日志、工具脚本和目录穿越路径不可访问。
-- 静态首页、数据集和图标可访问。
-- OPTIONS 不返回 CORS 许可。
-- 未知 API 返回 JSON 404。
-- 查询参数和 Authorization 头不会写入请求日志。
-- 旧版带凭证的 GET 聊天路径不再支持，返回 404。
+- Health check, CSP, and default demo mode.
+- `/api/config` returns no credential material.
+- Synthetic data class and four base districts.
+- Live AI disabled by default.
+- Request-body size limit.
+- `.env`, source, runtime logs, tool scripts, and traversal paths are inaccessible.
+- Static home page, dataset, and favicon are accessible.
+- OPTIONS does not grant CORS.
+- Unknown APIs return JSON 404.
+- Query strings and Authorization headers are redacted from request logs.
+- The legacy credential-bearing GET chat route is unsupported and returns 404.
 
-### Node 测试
+### Node tests
 
 ```powershell
 node --test tests\engine.test.js
 ```
 
-覆盖并通过：
+Covered and passed:
 
-- 数据集 schema、42 家门店及 `synthetic` 标记。
-- 单商圈分析确定性、五维指标和核心圈划分。
-- 多商圈排名与最优值一致性。
-- 导入校验拒绝 HTML 字符和超限门店。
-- 示例导入文件可被接受。
-- 本地对话返回结构化建议和意图相关证据。
+- Dataset schema, 42 stores, and `synthetic` markers.
+- Deterministic single-district analysis, five dimensions, and core-ring segmentation.
+- Multi-district ranking and best-value consistency.
+- Import validation rejects HTML characters and over-limit store counts.
+- The example import file is accepted.
+- Local chat returns structured advice, English intent detection, and intent-specific evidence.
 
-### 语法与确定性
+### Syntax and determinism
 
 ```powershell
 python -m py_compile .\server.py .\tools\generate_demo_data.py .\tools\check_public_safety.py
@@ -66,61 +68,70 @@ node --check .\js\app.js
 python .\tools\generate_demo_data.py
 ```
 
-结果：
+Results:
 
-- 语法检查通过。
-- 数据生成前后 SHA-256 均为 `60A7CADD75707FC9B956A91021B58E8A3815434EC6853F98604C399A04A6E8DF`。
-- 生成器输出 4 个虚构商圈、42 家虚构门店。
+- All syntax checks passed.
+- The dataset SHA-256 before and after regeneration was `60A7CADD75707FC9B956A91021B58E8A3815434EC6853F98604C399A04A6E8DF`.
+- The generator produced 4 fictional districts and 42 fictional stores.
 
-### 公开安全检查
+### Public-safety check
 
 ```powershell
 python tools\check_public_safety.py
 ```
 
-结果：`PASS`。检查 25 个文本文件，未发现凭证模式、个人文件系统路径、非允许外部 URL 主机、旧版私有状态键、`.git`、`.env`、运行日志或缓存目录。
+The checker was run in a clean export of the published file tree, without `.git`, runtime state, caches, or local environment files. Result: `PASS`.
 
-### HTTP 冒烟测试
+The 25 scanned text files produced no findings for:
 
-以独立临时端口启动 `server.py`，实际请求结果：
+- credential patterns;
+- personal filesystem paths;
+- disallowed external URL hosts;
+- legacy private-state markers;
+- `.env` or runtime state;
+- CJK text.
 
-- `/api/health`：200。
-- `/index.html`：200。
-- `/api/config`：`{"liveAIEnabled": false}`。
-- `/api/districts`：200，返回合成数据集。
-- `POST /api/chat`：409 `live_disabled`。
-- `/server.py`、`/.env`、`/runtime/server.log`、`/tools/generate_demo_data.py`：均 404。
-- 响应包含 CSP；未包含 `Access-Control-Allow-Origin`。
+### HTTP smoke test
 
-### 项目自带启停脚本
+The server was started as an independent process on a temporary port. Actual responses:
+
+- `/api/health`: 200, `ok: true`, `mode: demo`, `liveAIEnabled: false`.
+- `/index.html`: 200.
+- `/api/config`: `{"liveAIEnabled": false}`.
+- `/api/districts`: 200 with the synthetic dataset.
+- `POST /api/chat`: 409 `live_disabled`.
+- `/server.py`, `/.env`, `/runtime/server.log`, and `/tools/generate_demo_data.py`: all 404.
+- Responses included CSP and no `Access-Control-Allow-Origin` header.
+
+### Project launcher and stop scripts
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\run_demo.ps1 -NoBrowser
-powershell -ExecutionPolicy Bypass -File .\scripts\stop_demo.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_demo.ps1 -NoBrowser
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\stop_demo.ps1
 ```
 
-结果：
+Results:
 
-- 启动脚本输出 `Demo service ready`。
-- `/api/health` 返回 `ok: true`、`mode: demo`、`liveAIEnabled: false`。
-- 停止脚本只停止本项目记录的服务进程，并输出 `Demo service stopped`。
+- The launcher printed `Demo service ready`.
+- `/api/health` returned `ok: true`, `mode: demo`, and `liveAIEnabled: false`.
+- The stop script stopped only the service process recorded by this project and printed `Demo service stopped`.
 
-## 人工检查
+### English UI and screenshots
 
-- 检查了 3 张随项目提供的截图：桌面单商圈、桌面多商圈、移动端单商圈。
-- 截图中的品牌、商圈、地址、地图点位和指标均为合成内容。
-- 未发现真实品牌、真实地址、真实门店、个人姓名、电话或账号信息。
-- 三张 PNG 均未包含 `tEXt`、`zTXt`、`iTXt` 或 `eXIf` 元数据块。
-- 页面静态资源只引用同源文件；SVG 命名空间使用标准 `www.w3.org` URI，不产生网络请求。
+- The page was loaded in headless Chrome against the local service.
+- Desktop single-district, desktop comparison, and mobile screenshots were recaptured from the English interface.
+- Visual review confirmed English navigation, labels, charts, tables, recommendations, and footer text.
+- The screenshots use fictional brands, districts, addresses, map points, and metrics only.
+- The comparison screenshot used three synthetic districts and the single-district screenshots used two different synthetic districts.
 
-## 未覆盖
+## Not covered
 
-- 未启用或调用真实 AI 接口；该能力默认关闭，且需要使用者自行提供服务端配置。
-- 当前沙箱环境未能稳定运行无头浏览器截图回归，因此浏览器自动化 E2E 未作为通过项记录；页面资源、接口、分析逻辑和交互代码由上述测试覆盖，视觉资产已人工检查。
-- 未做不同浏览器版本的视觉回归、无障碍审计、压力测试或生产级渗透测试。
-- 未验证远程仓库、GitHub Actions、Fork 或 Release 附件的状态。
+- No real AI endpoint was enabled or called; the capability is disabled by default and requires operator configuration.
+- Browser E2E assertions were limited to rendered screenshots and HTTP behavior; no interactive click-through regression suite is included.
+- No cross-browser visual regression, accessibility audit, load test, or production penetration test was performed.
+- The legacy repository and its remote visibility were not changed by this test run.
 
-## 复现命令
+## Reproduction
 
 ```powershell
 cd portfolio-ready\district-health-studio-public

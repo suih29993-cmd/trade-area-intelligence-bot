@@ -67,7 +67,7 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(len(data["districts"]), 4)
 
     def test_live_chat_is_disabled_by_default(self) -> None:
-        body = json.dumps({"message": "竞争激烈吗？", "districtId": "harbor-central"}).encode()
+        body = json.dumps({"message": "Is competition intense here?", "districtId": "harbor-central"}).encode()
         status, _, response = self.request(
             "/api/chat", method="POST", body=body, headers={"Content-Type": "application/json"}
         )

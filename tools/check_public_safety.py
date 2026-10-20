@@ -58,6 +58,7 @@ PERSONAL_PATH_PATTERNS = [
     re.compile(r"/home/[^/\s]+/"),
 ]
 URL_PATTERN = re.compile(r"https?://(?![%{<])[^\s<>\"')]+")
+CJK_PATTERN = re.compile(r"[\u4e00-\u9fff]")
 
 
 def iter_text_files() -> list[Path]:
@@ -93,6 +94,8 @@ def main() -> int:
     for path in iter_text_files():
         text = path.read_text(encoding="utf-8", errors="replace")
         for line_number, line in enumerate(text.splitlines(), 1):
+            if CJK_PATTERN.search(line):
+                add(errors, path, line_number, "non-English CJK text")
             if path != CHECKER:
                 for category, pattern in SECRET_PATTERNS:
                     if pattern.search(line):
@@ -154,7 +157,7 @@ def main() -> int:
 
     print("PUBLIC SAFETY CHECK: PASS")
     print("Checked files: %s" % len(iter_text_files()))
-    print("No credential patterns, personal paths, external URL hosts or runtime state found.")
+    print("No credential patterns, personal paths, external URL hosts, CJK text or runtime state found.")
     return 0
 
 

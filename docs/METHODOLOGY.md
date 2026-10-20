@@ -1,46 +1,46 @@
-# 指标方法说明
+# Methodology · Synthetic District Metrics
 
-本文说明演示项目如何从门店级合成数据计算商圈指标。所有公式都是作品集演示规则，不是行业标准，也不能直接用于真实经营决策。
+This document explains how the demo calculates district metrics from store-level synthetic data. Every formula is a portfolio demonstration rule, not an industry standard, and must not be used directly for real operating decisions.
 
-## 1. 数据分层
+## 1. Data layers
 
-### 原始层
+### Raw layer
 
-每个商圈包含若干门店记录：
+Each district contains store records with:
 
-- `role`：`focus` 表示焦点品牌，`competitor` 表示竞品。
-- `x`、`y`：以商圈中心为原点的局部平面坐标，单位 km。
-- `monthlyOrders`：合成月售单量。
-- `channels`：两个虚构渠道，各自包含配送费、活动深度、活动描述和红包值。
+- `role`: `focus` for the focus brand or `competitor` for a competitor.
+- `x`, `y`: local planar coordinates in km, with the district center as origin.
+- `monthlyOrders`: synthetic monthly order volume.
+- `channels`: two fictional channels, each with a delivery fee, promotion depth, promotion label, and coupon value.
 
-### 指标层
+### Metric layer
 
-分析引擎先计算：
+The analysis engine first calculates:
 
-- 焦点门店总数、核心圈门店数、外围门店数。
-- 竞品门店总数、竞品品牌数、品牌聚合月售。
-- 焦点与竞品的模拟订单份额。
-- 双渠道平均配送费、活动覆盖率、活动深度和红包覆盖率。
+- Total, core-ring, and outer-ring focus-store counts.
+- Total competitor stores, competitor brand count, and aggregated brand orders.
+- Simulated order share for the focus brand and competitors.
+- Average delivery fee, promotion coverage, promotion depth, and coupon coverage across two channels.
 
-### 评分层
+### Scoring layer
 
-将指标归一化为五个 0–100 维度，再加权得到商圈健康度。
+Metrics are normalized into five dimensions from 0 to 100, then weighted into the district health score.
 
-## 2. 距离与分区
+## 2. Distance and segmentation
 
-门店到商圈中心的距离：
+Distance from a store to the district center:
 
 ```text
 d = sqrt(x² + y²)
 ```
 
-- `d ≤ 1`：核心圈。
-- `1 < d ≤ 3`：外围覆盖圈。
-- 数据校验拒绝 `d > 3.05` 的记录。
+- `d ≤ 1`: core ring.
+- `1 < d ≤ 3`: outer coverage ring.
+- Data validation rejects records with `d > 3.05`.
 
-## 3. 五维评分
+## 3. Five dimensions
 
-### 门店覆盖
+### Store coverage
 
 ```text
 coverage = clamp(
@@ -50,9 +50,9 @@ coverage = clamp(
 )
 ```
 
-解释：核心圈门店权重更高；竞品明显多于焦点品牌时扣分。
+Interpretation: core-ring stores receive more weight, while a large competitor advantage reduces the score.
 
-### 低竞对压力
+### Low competitor pressure
 
 ```text
 competition = clamp(
@@ -61,9 +61,9 @@ competition = clamp(
 )
 ```
 
-解释：分数越高表示竞对压力越低。`topBrandCount` 是竞品中门店数最多的品牌门店数。
+Interpretation: a higher score means lower competitor pressure. `topBrandCount` is the number of stores belonging to the competitor brand with the most stores.
 
-### 活动力度
+### Promotion intensity
 
 ```text
 promotion = clamp(
@@ -73,21 +73,21 @@ promotion = clamp(
 )
 ```
 
-- `*PromoCoverage`：至少一个渠道存在活动的门店占比。
-- `*PromoDepth`：所有渠道活动百分比的平均值。
+- `*PromoCoverage`: share of stores with at least one active channel promotion.
+- `*PromoDepth`: average promotion percentage across all channels.
 
-解释：不鼓励无差别补贴，只比较相对覆盖与深度。
+Interpretation: the model compares relative coverage and depth rather than encouraging indiscriminate subsidies.
 
-### 销售体量
+### Sales volume
 
 ```text
 focusShare = focusOrders / (focusOrders + competitorOrders)
 sales = clamp(focusShare × 180, 0, 100)
 ```
 
-解释：用模拟订单份额近似销售体量。份额 55.6% 对应约 100 分。
+Interpretation: simulated order share approximates sales volume. A 55.6% share maps to approximately 100 points.
 
-### 配送体验
+### Delivery experience
 
 ```text
 delivery = clamp(
@@ -97,9 +97,9 @@ delivery = clamp(
 )
 ```
 
-解释：配送费越低越好；高于竞品时额外扣分。
+Interpretation: lower delivery fees score better; fees above the competitor average receive an additional penalty.
 
-## 4. 综合健康度
+## 4. Overall health
 
 ```text
 health = round(
@@ -111,26 +111,26 @@ health = round(
 )
 ```
 
-分级：
+Bands:
 
-- 85–100：强健。
-- 70–84：稳健。
-- 55–69：需关注。
-- 0–54：偏弱。
+- 85-100: Strong.
+- 70-84: Stable.
+- 55-69: Watch.
+- 0-54: Weak.
 
-## 5. 合成数据生成
+## 5. Synthetic data generation
 
-`tools/generate_demo_data.py` 使用：
+`tools/generate_demo_data.py` uses:
 
-- 固定商圈参数：虚构客流强度、竞争强度、活动强度、配送费基线。
-- SHA-256 派生的确定性伪随机流。
-- 门店角色、距离、品牌因子、活动因子和订单噪声公式。
+- Fixed district parameters for fictional traffic intensity, competitive intensity, promotion intensity, and delivery-fee baseline.
+- A deterministic pseudo-random stream derived from SHA-256.
+- Formulas for store role, distance, brand factor, promotion factor, and order noise.
 
-生成过程不读取任何真实数据文件，也不调用外部服务。重复运行产生同一份 JSON。
+Generation reads no real data files and calls no external service. Repeated runs produce the same JSON.
 
-## 6. 解释边界
+## 6. Interpretation boundaries
 
-- 评分是演示用启发式模型，没有经过真实业务校准。
-- 不同权重会改变排名，权重本身是可配置的产品假设。
-- 活动和配送费只反映合成渠道字段，不代表任何真实平台规则。
-- 多商圈对比只用于展示交互与分析方法，不能替代市场调研。
+- The score is a heuristic demonstration model and has not been calibrated against real business data.
+- Different weights can change rankings; the weights represent configurable product assumptions.
+- Promotions and delivery fees reflect synthetic channel fields only and do not represent real platform rules.
+- Multi-district comparison demonstrates interaction and analysis methods; it does not replace market research.
