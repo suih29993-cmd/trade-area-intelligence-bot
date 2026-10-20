@@ -1,8 +1,10 @@
-**Live Demo:** https://trade-area-intelligence-bot.pages.dev/
+**Live Demo:** [https://trade-area-intelligence-bot.pages.dev/](https://trade-area-intelligence-bot.pages.dev/)
 
-# District Health Studio · Synthetic District Health Workbench (Public Portfolio Edition)
+# Business District Bot · District Health Studio
 
-A portfolio-ready district diagnostics demo built on synthetic store data. It covers single-district diagnosis, multi-district comparison, health-score decomposition, competitor pressure, promotion intensity, interactive SVG maps, and structured diagnostic chat.
+**Business-district and competitor analysis workbench for synthetic store data.**
+
+This portfolio project turns district-level store records into an explainable view of coverage, competition, promotions, sales mix, delivery experience, and prioritized recommendations. It covers single-district diagnosis, multi-district comparison, health-score decomposition, an interactive SVG map, and structured diagnostic chat.
 
 > **Data notice:** The project ships with 4 fictional districts and 42 fictional stores. Every store name, address, order count, delivery fee, promotion, health score, and ranking is synthetic. Nothing represents a real brand, store, or operating result.
 
@@ -52,6 +54,13 @@ The project demonstrates an end-to-end analytics product flow rather than a sing
 | Live data / live AI | Optional, server-configured, off by default; sends only aggregate metrics for the selected synthetic district |
 | Data import and export | Local JSON import, schema validation, actionable errors, and synthetic-data export |
 | Key configuration | No credentials in the browser; live mode reads server-side environment variables only |
+
+## Example questions
+
+- Is competition intense around Harbor Central?
+- Is promotion intensity sufficient?
+- Where are the coverage gaps?
+- Are delivery fees too high?
 
 ## Interface Preview
 
