@@ -8,6 +8,7 @@ Scope: original local project snapshot, related local runtime traces, public cop
 - The original project's tracked source, README, configuration example, and local Git history contained **no hardcoded valid API key, `securityJsCode`, Bearer token, or other published credential**.
 - The original project contained real district names, real coordinates, real-brand and platform context, plus live flows that sent business context to external map, search, and AI services. It was **not suitable for direct public release**.
 - This public copy uses synthetic data only, a local SVG map, deterministic rule-based chat, and optional server-side AI that is disabled by default. It copies no original data, configuration, logs, or Git history.
+- The public Cloudflare Pages deployment publishes only static front-end assets and four read-only Functions. The live-AI endpoint is disabled, and the browser makes no external requests during normal use.
 - A Chrome profile contained key-name traces from the legacy site's `localStorage`. No key value was read or printed. If that browser profile has been backed up, shared, or copied, treat the related credentials as exposed and rotate them.
 - Read-only history scans of Chrome and Edge found no URL that called the legacy `/api/chat` endpoint with a credential query parameter.
 - The English conversion was validated with an ASCII-source CJK regex. All text sources in the public copy are now expected to contain no CJK characters.
@@ -68,6 +69,19 @@ Public-copy conversion:
 - Request bodies are limited to 16 KB and messages to 500 characters. Logs exclude query strings, headers, and bodies. Errors use fixed codes.
 - Imports validate length, coordinates, fields, HTML angle brackets, and control characters. At most 3 imported districts are retained.
 - The public copy ships no `.env`, runtime log, cache, database, or original business file. The local Git repository created for publishing is not part of the remote file tree.
+- The Pages build excludes Python source, tests, tools, scripts, documentation sources, environment files, runtime state, and Git history.
+- Pages API responses carry a denial CSP, HSTS, COOP, CORP, frame denial, MIME-sniffing protection, referrer policy, and permissions policy. Static assets receive the full application CSP in addition to the same hardening headers.
+
+## Cloudflare Pages deployment review
+
+- Project: `trade-area-intelligence-bot`; production URL: `https://trade-area-intelligence-bot.pages.dev/`.
+- Deployment method: direct Wrangler upload of the generated `dist/` directory. No Cloudflare credential was written to the repository, browser code, or deployment artifact.
+- Published surface: `index.html`, `css/`, `js/`, `data/`, `assets/`, `examples/`, `_headers`, and four read-only Pages Functions.
+- `/api/health`, `/api/config`, and `/api/districts` return synthetic status or data only.
+- `/api/chat` returns `409 live_disabled`; no provider URL, API key, environment binding, or outbound model call is present.
+- The Functions expose no database, file upload, admin action, write operation, or user data store.
+- Headless Chrome against the production URL completed diagnosis, comparison, local chat, import, export, reset, and refresh with 0 console errors, 0 page errors, 0 failed requests, and 0 external-domain requests.
+- The Cloudflare account remains the deployment authority. Automatic GitHub-to-Pages builds are not configured, so the GitHub repository and the online deployment must be updated deliberately.
 
 ## English conversion verification
 
@@ -87,7 +101,7 @@ Public-copy conversion:
 3. **Keep the legacy repository private:** do not change the old repository's visibility, branches, tags, forks, cache, or mirrors. If it was ever public, evaluate disclosure as a real-business-data incident rather than assuming the current branch is clean.
 4. **Review terminal and screenshot history:** check any shared terminal output, browser history, proxy logs, or screenshots that may contain query parameters. Treat confirmed exposure as a credential incident.
 5. **Use live mode deliberately:** enable it only with an operator-owned HTTPS endpoint. Never enable it after importing real data.
-6. **Re-check before publishing:** run `python tools\check_public_safety.py`, inspect screenshots and the repository root, and confirm that the published tree contains no runtime or cache directories.
+6. **Re-check before publishing:** run `python tools\check_public_safety.py` in a clean export, inspect screenshots and the repository root, and confirm that the published tree contains no runtime or cache directories.
 
 ## Uncovered items
 

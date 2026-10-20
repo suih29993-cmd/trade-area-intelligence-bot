@@ -1,3 +1,5 @@
+**Live Demo:** https://trade-area-intelligence-bot.pages.dev/
+
 # District Health Studio · Synthetic District Health Workbench (Public Portfolio Edition)
 
 A portfolio-ready district diagnostics demo built on synthetic store data. It covers single-district diagnosis, multi-district comparison, health-score decomposition, competitor pressure, promotion intensity, interactive SVG maps, and structured diagnostic chat.
@@ -5,6 +7,26 @@ A portfolio-ready district diagnostics demo built on synthetic store data. It co
 > **Data notice:** The project ships with 4 fictional districts and 42 fictional stores. Every store name, address, order count, delivery fee, promotion, health score, and ranking is synthetic. Nothing represents a real brand, store, or operating result.
 
 > **Public-edition boundary:** This directory is an independently rebuilt portfolio copy. It contains none of the original project's source, real business data, runtime logs, local configuration, or Git history. The default demo uses a local SVG map and a deterministic rule engine instead of live map, search, or AI dependencies.
+
+## Live Demo and Deployment
+
+The public demo runs at **https://trade-area-intelligence-bot.pages.dev/**. It reuses the same static front end, analysis engine, and interaction flow as the local build. Four read-only Cloudflare Pages Functions replace the local Python API routes:
+
+- `/api/health` returns demo status and version metadata.
+- `/api/config` always reports `liveAIEnabled: false`.
+- `/api/districts` returns the 4 fictional districts and 42 synthetic stores.
+- `/api/chat` returns `409 live_disabled`; chat is handled by the in-browser rule engine.
+
+The Pages build publishes only `index.html`, `css/`, `js/`, `data/`, `assets/`, `examples/`, `_headers`, and `functions/`. It excludes the Python server, tests, tools, scripts, documentation sources, environment files, runtime state, and Git history.
+
+Rebuild and redeploy with:
+
+```powershell
+node tools\build_pages.mjs
+npx wrangler pages deploy dist --project-name trade-area-intelligence-bot --branch main
+```
+
+Cloudflare credentials are not stored in this repository or in browser code. The current project uses direct Wrangler uploads; automatic GitHub-to-Pages builds are not configured.
 
 ## Purpose
 
@@ -16,7 +38,7 @@ The project demonstrates an end-to-end analytics product flow rather than a sing
 - Render store coverage, a 3 km radius, and point details with a local SVG map.
 - Generate structured recommendations with a deterministic rule engine.
 - Support JSON import and export, schema validation, error feedback, and local persistence.
-- Serve the demo with the Python standard library, an explicit static-resource allow-list, and secure response headers.
+- Serve the local demo with the Python standard library and deploy the same front end with Cloudflare Pages Functions and secure response headers.
 
 ## Capability Mapping
 

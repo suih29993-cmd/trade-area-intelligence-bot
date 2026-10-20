@@ -16,12 +16,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = Path(__file__).resolve()
 
-SKIP_DIRS = {".git", "runtime", "node_modules", "__pycache__", ".venv", "venv", "private", "exports"}
-TEXT_SUFFIXES = {
-    ".bat", ".css", ".example", ".html", ".js", ".json", ".md", ".ps1",
-    ".py", ".svg", ".txt", ".yml", ".yaml",
+SKIP_DIRS = {
+    ".git", ".wrangler", "runtime", "node_modules", "__pycache__", ".venv",
+    "venv", "private", "exports", "dist",
 }
-ALLOWED_URL_HOSTS = {"127.0.0.1", "www.w3.org"}
+TEXT_SUFFIXES = {
+    ".bat", ".css", ".example", ".html", ".js", ".json", ".md", ".mjs",
+    ".ps1", ".py", ".svg", ".txt", ".yml", ".yaml",
+}
+SPECIAL_TEXT_NAMES = {"_headers", ".env.example", ".gitignore"}
+ALLOWED_URL_HOSTS = {"127.0.0.1", "www.w3.org", "trade-area-intelligence-bot.pages.dev"}
 REQUIRED_FILES = {
     ".env.example",
     ".gitignore",
@@ -69,7 +73,7 @@ def iter_text_files() -> list[Path]:
         relative = path.relative_to(ROOT)
         if any(part in SKIP_DIRS for part in relative.parts):
             continue
-        if path.suffix.lower() in TEXT_SUFFIXES or path.name == ".env.example":
+        if path.suffix.lower() in TEXT_SUFFIXES or path.name in SPECIAL_TEXT_NAMES:
             files.append(path)
     return sorted(files)
 

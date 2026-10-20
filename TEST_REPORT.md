@@ -17,7 +17,10 @@ Environment: Windows PowerShell, Python 3.12.10, Node.js v24.19.0
 | Default live AI state | Disabled; `liveAIEnabled: false` |
 | CORS | Not enabled |
 | Security headers | CSP and related headers present |
-| Public-safety checker | Passed in a clean export: 25 text files, 0 findings |
+| Cloudflare Pages build and upload | Passed; 8 files uploaded |
+| Production HTTP and API checks | 200 for page/read APIs; 409 for disabled live chat |
+| Production browser flow | Passed in headless Chrome with no console or network errors |
+| Public-safety checker | Passed in a clean export: 32 text files, 0 findings |
 | CJK source scan | 0 CJK findings in text sources |
 | English screenshots | Regenerated and visually reviewed |
 
@@ -82,7 +85,7 @@ python tools\check_public_safety.py
 
 The checker was run in a clean export of the published file tree, without `.git`, runtime state, caches, or local environment files. Result: `PASS`.
 
-The 25 scanned text files produced no findings for:
+The 32 scanned text files produced no findings for:
 
 - credential patterns;
 - personal filesystem paths;
@@ -124,10 +127,29 @@ Results:
 - The screenshots use fictional brands, districts, addresses, map points, and metrics only.
 - The comparison screenshot used three synthetic districts and the single-district screenshots used two different synthetic districts.
 
+### Cloudflare Pages production verification
+
+```powershell
+node tools\build_pages.mjs
+npx wrangler pages deploy dist --project-name trade-area-intelligence-bot --branch main
+```
+
+The production site was verified at `https://trade-area-intelligence-bot.pages.dev/` after the upload completed:
+
+- The page returned `200`; `/api/health`, `/api/config`, and `/api/districts` returned `200`.
+- `/api/districts` returned `dataClass: synthetic`, 4 districts, and 42 stores.
+- `POST /api/chat` returned `409 live_disabled`, as designed.
+- Static and API responses included CSP, HSTS, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, COOP, and CORP headers.
+- A headless Chrome flow exercised district diagnosis, structured local chat, multi-district comparison, JSON import, JSON export, local-storage cleanup, and page refresh.
+- The browser reported 0 console errors, 0 page errors, 0 failed requests, and 0 requests to external domains.
+- The only tested browser-storage key was `dhs_imports_v1`; it contained the imported synthetic district and was removed by the reset action.
+- The generated `production-demo-check.png` screenshot remains in the ignored `dist/` directory and is not part of the repository or deployment source tree.
+
 ## Not covered
 
 - No real AI endpoint was enabled or called; the capability is disabled by default and requires operator configuration.
-- Browser E2E assertions were limited to rendered screenshots and HTTP behavior; no interactive click-through regression suite is included.
+- The browser check used Chromium only; no cross-browser, accessibility, load, or production penetration test was performed.
+- Automatic GitHub-to-Pages builds are not configured. Production updates currently use the verified `dist/` build and a direct Wrangler upload.
 - No cross-browser visual regression, accessibility audit, load test, or production penetration test was performed.
 - The legacy repository and its remote visibility were not changed by this test run.
 
